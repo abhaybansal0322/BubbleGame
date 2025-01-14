@@ -1,20 +1,14 @@
-# Use a stable Node.js LTS version
-FROM node:18-alpine
+# Use an official Nginx image
+FROM nginx:alpine
 
-# Set the working directory
-WORKDIR /app
+# Set the working directory inside the container
+WORKDIR /usr/share/nginx/html
 
-# Copy package.json and package-lock.json (if available)
-COPY package*.json ./
-
-# Install dependencies
-RUN npm install
-
-# Copy the rest of the application
+# Copy all files from the current directory to the working directory
 COPY . .
 
-# Expose the port your app listens on
-EXPOSE 3000
+# Expose port 80
+EXPOSE 80
 
-# Start the application
-CMD ["npm", "start"]
+# Default command to run Nginx
+CMD ["nginx", "-g", "daemon off;"]
